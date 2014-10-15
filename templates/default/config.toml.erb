@@ -1,0 +1,28 @@
+<% if node['heka']['enable_dashboard'] -%>
+[Dashboard]
+type = "DashboardOutput"
+address = "<%= node['ipaddress'] %>:4352"
+ticker_interval = 15
+<% end -%>
+
+# <#% if node['heka']['types'].include?('thing') -%>
+# configure type
+# <#% end %>
+
+<% if node['heka']['outputs'].include?('stdout') -%>
+[stdout]
+type = "LogOutput"
+message_matcher = "TRUE"
+encoder = "PayloadEncoder"
+
+<% end -%>
+
+<% if node['heka']['encoders'].include?('elasticsearch') -%>
+[ESLogstashV0Encoder]
+es_index_from_timestamp = true
+type_name = "%{Type}"
+<% end -%>
+
+<% if node['heka']['encoders'].include?('payload') -%>
+[PayloadEncoder]
+<% end -%>
