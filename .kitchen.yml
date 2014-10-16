@@ -9,7 +9,7 @@ platforms:
   - name: ubuntu-12.04
 
 suites:
-  - name: heka_server_install
+  - name: heka_client
     run_list:
       - recipe[heka::default]
     attributes: 
